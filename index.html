@@ -80,7 +80,7 @@
       width: 100%;
       padding: 0 54px;
       font-family: "Plus Jakarta Sans", sans-serif;
-      font-size: 22px;
+      font-size: 25px;
       font-weight: 900;
       line-height: 1.03;
       letter-spacing: -0.6px;
@@ -118,9 +118,13 @@
       font-weight: 900;
       color: rgba(255, 255, 255, 0.88);
       margin-bottom: 7px;
-      line-height: 1.1;
+      line-height: 1.15;
       text-align: center;
-      white-space: nowrap;
+      white-space: normal;
+    }
+
+    .main-label span {
+      display: block;
     }
 
     .main-value {
@@ -293,7 +297,11 @@
     <div class="main-stat">
       <div class="main-content">
         <div class="damage-left">
-          <div class="main-label">Дамаг в останньому бою</div>
+          <div class="main-label">
+            <span>Дамаг</span>
+            <span>в останньому бою</span>
+          </div>
+
           <div class="main-value" id="total_damage">0</div>
         </div>
 
@@ -469,8 +477,8 @@
     for (let i = 1; i < rows.length; i++) {
       const row = rows[i];
 
-      const saxon = toNumber(row[2]);   // C: saXon dmg
-      const pohuist = toNumber(row[4]); // E: POHU1ST dmg
+      const saxon = toNumber(row[2]);
+      const pohuist = toNumber(row[4]);
 
       if (saxon > 0 || pohuist > 0) {
         battleRows.push(row);
@@ -487,8 +495,8 @@
     for (let i = 1; i < rows.length; i++) {
       const row = rows[i];
 
-      const battleNumber = toNumber(row[0]); // A: №
-      const winValue = row[6];               // G: Win
+      const battleNumber = toNumber(row[0]);
+      const winValue = row[6];
 
       if (battleNumber > 0) {
         lastBattleNumber = battleNumber;
@@ -521,14 +529,14 @@
     let sumPohuist = 0;
 
     for (const row of battleRows) {
-      sumSaxon += toNumber(row[2]);   // C: saXon dmg
-      sumPohuist += toNumber(row[4]); // E: POHU1ST dmg
+      sumSaxon += toNumber(row[2]);
+      sumPohuist += toNumber(row[4]);
     }
 
     const lastRow = battleRows[battleRows.length - 1];
 
-    const saxon = toNumber(lastRow[2]);   // C: saXon dmg
-    const pohuist = toNumber(lastRow[4]); // E: POHU1ST dmg
+    const saxon = toNumber(lastRow[2]);
+    const pohuist = toNumber(lastRow[4]);
 
     const avgSaxon = Math.round(sumSaxon / battleRows.length);
     const avgPohuist = Math.round(sumPohuist / battleRows.length);
