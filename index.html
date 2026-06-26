@@ -340,7 +340,7 @@
 <script>
 (function () {
   const SHEET_ID = "17phnEn-NW-OnrZg4DcW65r-Xoq6ScsdVjS5yL0SS3fk";
-  const GID = "506446790";
+  const GID = "599026017";
   const URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=${GID}`;
 
   const REFRESH_MS = 5000;
@@ -469,8 +469,8 @@
     for (let i = 1; i < rows.length; i++) {
       const row = rows[i];
 
-      const saxon = toNumber(row[4]);
-      const pohuist = toNumber(row[5]);
+      const saxon = toNumber(row[2]);   // C: saXon dmg
+      const pohuist = toNumber(row[4]); // E: POHU1ST dmg
 
       if (saxon > 0 || pohuist > 0) {
         battleRows.push(row);
@@ -480,15 +480,15 @@
     return battleRows;
   }
 
-  function calculateWinStatsByColumnL(rows) {
+  function calculateWinStatsByColumnG(rows) {
     let lastBattleNumber = 0;
     let wins = 0;
 
     for (let i = 1; i < rows.length; i++) {
       const row = rows[i];
 
-      const battleNumber = toNumber(row[0]);
-      const winValue = row[11];
+      const battleNumber = toNumber(row[0]); // A: №
+      const winValue = row[6];               // G: Win
 
       if (battleNumber > 0) {
         lastBattleNumber = battleNumber;
@@ -511,7 +511,7 @@
 
   function calculateStats(rows) {
     const battleRows = getBattleRows(rows);
-    const winStats = calculateWinStatsByColumnL(rows);
+    const winStats = calculateWinStatsByColumnG(rows);
 
     if (battleRows.length === 0) {
       return null;
@@ -521,14 +521,14 @@
     let sumPohuist = 0;
 
     for (const row of battleRows) {
-      sumSaxon += toNumber(row[4]);
-      sumPohuist += toNumber(row[5]);
+      sumSaxon += toNumber(row[2]);   // C: saXon dmg
+      sumPohuist += toNumber(row[4]); // E: POHU1ST dmg
     }
 
     const lastRow = battleRows[battleRows.length - 1];
 
-    const saxon = toNumber(lastRow[4]);
-    const pohuist = toNumber(lastRow[5]);
+    const saxon = toNumber(lastRow[2]);   // C: saXon dmg
+    const pohuist = toNumber(lastRow[4]); // E: POHU1ST dmg
 
     const avgSaxon = Math.round(sumSaxon / battleRows.length);
     const avgPohuist = Math.round(sumPohuist / battleRows.length);
